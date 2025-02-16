@@ -1,0 +1,57 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "bootloader",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "openocd",
+            "serverpath": "${userHome}/Microchip/SoftConsole-v2021.1/openocd/bin/openocd",
+            "cwd": "${workspaceRoot}",
+            "executable": "${workspaceRoot}/bootloader/build/smartfusion_bootloader.elf",
+            "configFiles": [
+                "board/microsemi-cortex-m3.cfg",
+            ],
+            "openOCDPreConfigLaunchCommands": [
+                "set DEVICE M2S010",
+                "adapter_khz 6000",
+            ],
+            "debuggerArgs": [
+                "--interpreter=mi2", // softconsole does it
+                "--nx" // softconsole does it
+            ],
+            // "preLaunchTask": "Build",
+            "runToEntryPoint": "main",
+            "showDevDebugOutput": "none",
+            "gdbPath": "gdb-multiarch",
+            // "gdbPath": "${userHome}/Microchip/SoftConsole-v2021.1/arm-none-eabi-gcc/bin/arm-none-eabi-gdb",
+            // "liveWatch": {
+            //     "enabled": true,
+            //     "samplesPerSecond": 4
+            // }
+        },
+        {
+            "name": "App",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "openocd",
+            "serverpath": "${userHome}/Microchip/SoftConsole-v2021.1/openocd/bin/openocd",
+            "cwd": "${workspaceRoot}",
+            "executable": "${workspaceRoot}/app/build/smartfusion_app.elf",
+            "configFiles": [
+                "board/microsemi-cortex-m3.cfg",
+            ],
+            "openOCDPreConfigLaunchCommands": [
+                "set DEVICE M2S010",
+                "adapter_khz 6000",
+            ],
+            "debuggerArgs": [
+                "--interpreter=mi2", // softconsole does it
+                "--nx" // softconsole does it
+            ],
+            "runToEntryPoint": "main",
+            "showDevDebugOutput": "none",
+            "gdbPath": "gdb-multiarch",
+        }
+    ]
+}
