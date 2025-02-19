@@ -11,14 +11,17 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -T ${LINKER_SCRIPT}")
 # Set cpu to cortex-m3
 set(CPU_FLAGS "-mcpu=cortex-m3")
 # Set compiler flags
+set(CMAKE_BUILD_TYPE Debug)
 add_compile_options(${CPU_FLAGS} ${COMMON_FLAGS})
-SET(CMAKE_CXX_FLAGS_DEBUG "-g")
+SET(CMAKE_CXX_FLAGS_DEBUG "-g -O0")
 SET(CMAKE_CXX_FLAGS_RELEASE "-O3")
+# SET(CMAKE_CXX_FLAGS "-DMICROSEMI_STDIO_THRU_MMUART0 -DMICROSEMI_STDIO_BAUD_RATE=921600")
 
 SET(FIRMWARE_DIR ${CMAKE_SOURCE_DIR}/../firmware/)
 # Include directories
 include_directories(
     ${FIRMWARE_DIR}
+    ${CMAKE_SOURCE_DIR}/inc
     ${CMAKE_SOURCE_DIR}/../ARM_CMSIS/CMSIS/Include
 )
 

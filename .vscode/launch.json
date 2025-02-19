@@ -7,7 +7,7 @@
             "request": "launch",
             "servertype": "openocd",
             "serverpath": "${userHome}/Microchip/SoftConsole-v2021.1/openocd/bin/openocd",
-            "cwd": "${workspaceRoot}",
+            "cwd": "${workspaceRoot}/bootloader",
             "executable": "${workspaceRoot}/bootloader/build/smartfusion_bootloader.elf",
             "configFiles": [
                 "board/microsemi-cortex-m3.cfg",
@@ -47,9 +47,12 @@
             ],
             "debuggerArgs": [
                 "--interpreter=mi2", // softconsole does it
-                "--nx" // softconsole does it
+                // "--nx" // softconsole does it
             ],
-            "runToEntryPoint": "main",
+            "postStartSessionCommands": [
+                "monitor reset halt"
+            ],
+            // "runToEntryPoint": "main",
             "showDevDebugOutput": "none",
             "gdbPath": "gdb-multiarch",
         }
