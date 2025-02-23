@@ -50,9 +50,9 @@ typedef struct {
     BootloaderState (*handler)(void);
 } StateMachine;
 
-uint8_t calculate_checksum(const Packet *packet);
+void bl_state_machine_init();
 void bl_state_machine_update();
-bool bootloader_need_sync();
-bool bootloader_is_done();
+bool bl_need_sync();
+bool bl_is_done();
 
 #endif // BOOTLOADER_H

@@ -34,6 +34,8 @@ file(GLOB_RECURSE SOURCES
     ${FIRMWARE_DIR}/*.c
     ${CMAKE_SOURCE_DIR}/src/ring-buffer.c
     ${CMAKE_SOURCE_DIR}/src/bootloader.c
+    ${CMAKE_SOURCE_DIR}/src/simple-sw-timer.c
+    ${CMAKE_SOURCE_DIR}/src/sys-time.c
     ${CMAKE_SOURCE_DIR}/src/comms.c
     ${CMAKE_SOURCE_DIR}/src/uart.c
     ${CMAKE_SOURCE_DIR}/src/led.c

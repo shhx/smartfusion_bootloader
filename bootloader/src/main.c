@@ -7,14 +7,7 @@
 #include "uart.h"
 #include "comms.h"
 #include "bootloader.h"
-
-
-static volatile uint64_t tick = 0;
-static void delay_ms(uint32_t ms);
-
-__attribute__((__interrupt__)) void SysTick_Handler(void) {
-    tick++; 
-}
+#include "sys-time.h"
 
 void jump_to_app(void) {
     uint32_t *reset_vector_entry = (uint32_t *)(APP_START_ADDR + 4U);
@@ -25,30 +18,26 @@ void jump_to_app(void) {
 }
 
 int main() {
-    SystemCoreClockUpdate();
-    SysTick_Config(SystemCoreClock / 1000);  // 1ms
+    sys_time_init();
     uart_init();
     led_init();
     comms_init();
+    bl_state_machine_init();
     for (int i = 0; i < 4; i++) {
         led_toggle(LED_SYNC);
-        delay_ms(100);
+        sys_time_delay_ms(100);
     }
     // NVIC_SystemReset();
     while (1) {
-        if (!bootloader_need_sync()) {
-            // Only update comms when already synced
+        if (!bl_need_sync()) {
+            // Only update comms when are already synced
             comms_update();
         }
         bl_state_machine_update();
-        if (bootloader_is_done()) {
+        if (bl_is_done()) {
             uart_deinit();
+            sys_time_deinit();
             jump_to_app();
         }
     }
-}
-
-static void delay_ms(uint32_t ms) {
-    uint64_t end = tick + ms;
-    while (tick < end);
 }

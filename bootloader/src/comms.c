@@ -26,6 +26,8 @@ static uint32_t packet_write_index = 0;
 static uint32_t packet_buffer_mask = PACKET_BUFFER_SIZE - 1;
 
 static uint8_t comms_receive_byte();
+static uint8_t calculate_checksum(const Packet *packet);
+static uint8_t crc8(const uint8_t *data, uint8_t len);
 
 void comms_init() {
     packet_ack.cmd = CMD_ACK;
@@ -130,4 +132,27 @@ void comms_read(Packet *packet) {
 
 uint32_t big_endian_to_uint32(const uint8_t *bytes) {
     return (bytes[0] << 24) | (bytes[1] << 16) | (bytes[2] << 8) | bytes[3];
+}
+
+uint8_t crc8(const uint8_t *data, uint8_t len) {
+    uint8_t crc = 0;
+    for (uint8_t i = 0; i < len; i++) {
+        crc ^= data[i];
+        for (uint8_t j = 0; j < 8; j++) {
+            if (crc & 0x80) {
+                crc = (crc << 1) ^ 0x07;
+            } else {
+                crc <<= 1;
+            }
+        }
+    }
+    return crc;
+}
+
+uint8_t calculate_checksum(const Packet *packet) {
+    uint8_t crc = 0;
+    crc ^= crc8((uint8_t *)&packet->cmd, 1);
+    crc ^= crc8((uint8_t *)&packet->len, 1);
+    crc ^= crc8(packet->data, packet->len);
+    return crc;
 }
