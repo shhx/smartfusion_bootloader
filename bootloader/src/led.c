@@ -15,13 +15,8 @@ void led_set_many(uint8_t value) {
 }
 
 void led_set(uint8_t index, uint8_t value) {
-    int state = MSS_GPIO_get_outputs();
-    if (value) { // Active low
-        state &= ~(1 << index);
-    } else {
-        state |= (1 << index);
-    }
-    MSS_GPIO_set_output(index, value);
+    // Active low
+    MSS_GPIO_set_output(index, !value);
 }
 
 void led_toggle(uint8_t index) {

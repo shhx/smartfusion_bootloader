@@ -47,7 +47,7 @@ BootloaderState bl_wait_sync(void) {
         }
         return BL_STATE_SYNC;
     }
-    led_set(LED_SYNC, 0);
+    led_set(LED_SYNC, 1);
     return BL_STATE_WAIT_UPDATE_REQ;
 }
 
