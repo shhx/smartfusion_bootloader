@@ -323,7 +323,9 @@ define plot_variable
 end
 
 # target remote localhost:3333
+# file bootloader/build/smartfusion_bootloader.elf
+# symbol-file bootloader/build/smartfusion_bootloader.elf
 # # Reset the target
 # monitor reset halt
 # # Set breakpoint at main
-# break main
+# hbreak main
