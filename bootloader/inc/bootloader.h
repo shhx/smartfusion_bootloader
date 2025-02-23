@@ -7,10 +7,11 @@
 #include <string.h>
 
 #define NVM_BASE_ADDRESS   0x00000000u
-#define BOOLOADER_SIZE     0x8000U
-#define APP_START_ADDR     (NVM_BASE_ADDRESS + BOOLOADER_SIZE)
-#define PROTOCOL_SYNC_BYTE   0xAA
-#define MAX_DATA_LEN 256
+#define NVM_SIZE           0x40000U
+#define BOOTLOADER_SIZE    0x08000U
+#define FW_MAX_SIZE        (NVM_SIZE - BOOTLOADER_SIZE) // 256KB - 32KB
+#define APP_START_ADDR     (NVM_BASE_ADDRESS + BOOTLOADER_SIZE)
+#define MAX_DATA_LEN       256
 
 typedef enum {
     BL_STATE_SYNC,

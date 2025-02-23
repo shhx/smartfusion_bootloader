@@ -6,7 +6,6 @@
 #include "simple-sw-timer.h"
 
 #define DEFAULT_TIMEOUT 2000 // ms
-#define FW_MAX_SIZE 0x100000
 #define SYNC_LEN 4
 
 static uint8_t sync_seq[SYNC_LEN] = {0};

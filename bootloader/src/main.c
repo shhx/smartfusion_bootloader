@@ -25,9 +25,8 @@ int main() {
     bl_state_machine_init();
     for (int i = 0; i < 4; i++) {
         led_toggle(LED_SYNC);
-        sys_time_delay_ms(100);
+        sys_time_delay_ms(50);
     }
-    // NVIC_SystemReset();
     while (1) {
         if (!bl_need_sync()) {
             // Only update comms when are already synced
