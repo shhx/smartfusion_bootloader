@@ -7,21 +7,25 @@
             "request": "launch",
             "servertype": "openocd",
             "serverpath": "${userHome}/Microchip/SoftConsole-v2021.1/openocd/bin/openocd",
-            "cwd": "${workspaceRoot}/bootloader",
+            "cwd": "${workspaceRoot}/",
             "executable": "${workspaceRoot}/bootloader/build/smartfusion_bootloader.elf",
             "configFiles": [
                 "board/microsemi-cortex-m3.cfg",
+            ],
+            "overrideLaunchCommands": [
+                "load",
+                "symbol-file ${workspaceRoot}/bootloader/build/smartfusion_bootloader.elf",
+                "monitor reset halt",
             ],
             "openOCDPreConfigLaunchCommands": [
                 "set DEVICE M2S010",
                 "adapter_khz 6000",
             ],
             "debuggerArgs": [
-                "--interpreter=mi2", // softconsole does it
-                "--nx" // softconsole does it
+                // "--interpreter=mi2", // softconsole does it
+                // "--nx" // softconsole does it
             ],
             // "preLaunchTask": "Build",
-            "runToEntryPoint": "main",
             "showDevDebugOutput": "none",
             "gdbPath": "gdb-multiarch",
             // "gdbPath": "${userHome}/Microchip/SoftConsole-v2021.1/arm-none-eabi-gcc/bin/arm-none-eabi-gdb",
